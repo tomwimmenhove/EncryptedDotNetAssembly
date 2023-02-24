@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources/EncryptedAssembly.data" />
+    <EmbeddedResource Include="Resources/EncryptedAssemblySalt.data" />
   </ItemGroup>
 
   <ItemGroup>
