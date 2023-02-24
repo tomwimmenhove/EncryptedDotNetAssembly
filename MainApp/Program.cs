@@ -1,18 +1,18 @@
 ﻿using SharedInterfaces;
 using System.IO;
 
-namespace load
+namespace MainApp
 {
     class Program
     {
         private const string Password = "SomeVerySecretPassword";
-        private const string AssemblyResourceName = "load.Resources.EncryptedAssembly.data";
-        private const string SaltResourceName = "load.Resources.EncryptedAssemblySalt.data";
-        private const string SecretStuffClassName = "hello.SecretStuff";
+        private const string AssemblyResourceName = "MainApp.Resources.EncryptedAssembly.data";
+        private const string SaltResourceName = "MainApp.Resources.EncryptedAssemblySalt.data";
+        private const string SecretStuffClassName = "SecretAssembly.SecretStuff";
 
-        private const string AssemblyFileName = @"../hello/bin/release/net5.0/hello.dll";
-        private const string AssemblyResourceFileName = "../load/Resources/EncryptedAssembly.data";
-        private const string SaltResourceFileName = "../load/Resources/EncryptedAssemblySalt.data";
+        private const string AssemblyFileName = @"../SecretAssembly/bin/release/net5.0/SecretAssembly.dll";
+        private const string AssemblyResourceFileName = "Resources/EncryptedAssembly.data";
+        private const string SaltResourceFileName = "Resources/EncryptedAssemblySalt.data";
 
         static void Encrypt()
         {
@@ -20,7 +20,10 @@ namespace load
             using var outFile = File.Open(AssemblyResourceFileName, FileMode.Create);
             using var saltFile = File.Open(SaltResourceFileName, FileMode.Create);
 
-            Encryption.Encrypt(inFile, outFile, saltFile, new KeyIvPair(Password));
+            var keyIvPair = new KeyIvPair(Password);
+
+            saltFile.Write(keyIvPair.Salt);
+            Encryption.Encrypt(inFile, outFile, keyIvPair);
         }
 
         static void Main(string[] args)

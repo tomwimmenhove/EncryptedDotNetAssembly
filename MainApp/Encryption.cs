@@ -1,14 +1,12 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace load
+namespace MainApp
 {
     public static class Encryption
     {
-        public static void Encrypt(Stream inStream, Stream outStream, Stream outSaltStream, KeyIvPair keyIvPair)
+        public static void Encrypt(Stream inStream, Stream outStream, KeyIvPair keyIvPair)
         {
-            outSaltStream.Write(keyIvPair.Salt);
-
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = keyIvPair.Key;

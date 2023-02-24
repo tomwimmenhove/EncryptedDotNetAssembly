@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace load
+namespace MainApp
 {
     public class KeyIvPair
     {

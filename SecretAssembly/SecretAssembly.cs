@@ -1,7 +1,7 @@
 ﻿using System;
 using SharedInterfaces;
 
-namespace hello
+namespace SecretAssembly
 {
     public class SecretStuff : ISecretInterface
     {
