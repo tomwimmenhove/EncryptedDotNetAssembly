@@ -1,21 +1,29 @@
-using System;
+using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace MainApp
+namespace Crypto
 {
     public class KeyIvPair
     {
-        public byte[] Key { get; }
-        public byte[] Iv { get; }
-        public byte[] Salt { get; }
+        public byte[] Key { get; set; }
+        public byte[] Iv { get; set; }
+        public byte[] Salt { get; set; }
+
+        public KeyIvPair() { }
 
         public KeyIvPair(byte[] key, byte[] iv, byte[] salt)
         {
             Key = key;
             Iv = iv;
             Salt = salt;
+        }
+
+        public KeyIvPair(byte[] bytes)
+        {
+            Key = bytes.Take(32).ToArray();
+            Iv = bytes.Skip(32).Take(16).ToArray();
         }
 
         public KeyIvPair(string password, byte[] salt = null)
@@ -29,17 +37,22 @@ namespace MainApp
             Salt = deriveBytes.Salt;
         }
 
-        public static KeyIvPair SaltFromResource(string password, string saltResourceName)
+        public static KeyIvPair SaltFromResource(Assembly assembly, string password, string saltResourceName)
         {
-            var salt = GetSaltFromResource(saltResourceName);
+            var salt = GetSaltFromResource(assembly, saltResourceName);
 
-            return new KeyIvPair(password, GetSaltFromResource(saltResourceName));
+            return new KeyIvPair(password, salt);
         }
 
-        private static byte[] GetSaltFromResource(string resourceName)
+        public byte[] GetAsBytes() => Key.Concat(Iv).ToArray();
+
+        public bool Matches(KeyIvPair other) =>
+            Key.SequenceEqual(other.Key) &&
+            Iv.SequenceEqual(other.Iv);
+
+        private static byte[] GetSaltFromResource(Assembly assembly, string resourceName)
         {
-            var currentAssembly = Assembly.GetExecutingAssembly();
-            using (var resourceStream = currentAssembly.GetManifestResourceStream(resourceName))
+            using (var resourceStream = assembly.GetManifestResourceStream(resourceName))
             {
                 if (resourceStream == null)
                 {

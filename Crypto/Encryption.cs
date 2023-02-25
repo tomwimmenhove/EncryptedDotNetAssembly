@@ -1,7 +1,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace MainApp
+namespace Crypto
 {
     public static class Encryption
     {
@@ -20,6 +20,16 @@ namespace MainApp
             }
         }
 
+        public static byte[] Encrypt(byte[] input, KeyIvPair keyIvPair)
+        {
+            using (var plainStream = new MemoryStream(input))
+            using (var encryptedStream = new MemoryStream())
+            {
+                Encryption.Encrypt(plainStream, encryptedStream, keyIvPair);
+                return encryptedStream.ToArray();
+            }
+        }
+
         public static void Decrypt(Stream inStream, Stream outStream, KeyIvPair keyIvPair)
         {
             using (Aes aesAlg = Aes.Create())
@@ -32,6 +42,16 @@ namespace MainApp
                 {
                     csDecrypt.CopyTo(outStream);
                 }
+            }
+        }
+ 
+        public static byte[] Decrypt(byte[] input, KeyIvPair keyIvPair)
+        {
+            using (var encryptedStream = new MemoryStream(input))
+            using (var plainStream = new MemoryStream())
+            {
+                Encryption.Decrypt(encryptedStream, plainStream, keyIvPair);
+                return plainStream.ToArray();
             }
         }
     }
