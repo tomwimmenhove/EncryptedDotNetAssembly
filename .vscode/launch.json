@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/MainApp/bin/Debug/net6.0/MainApp.dll",
-            "args": [  ],
+            "args": [ ],
             "cwd": "${workspaceFolder}/MainApp",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -25,7 +25,7 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/PasswordService/bin/Debug/net6.0/PasswordService.dll",
-            "args": [],
+            "args": [ ],
             "cwd": "${workspaceFolder}/PasswordService",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser

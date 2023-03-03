@@ -1,5 +1,8 @@
+using PasswordService.BackingStore;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IPasswordStorage, FilePasswordStorage>();
 builder.Services.AddSwaggerGen(c => 
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Example API", Version = "v1" }));
 

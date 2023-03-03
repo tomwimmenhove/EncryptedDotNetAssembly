@@ -2,15 +2,15 @@ using System;
 
 namespace PasswordService
 {
-    internal class UserEntryDto
+    public class UserEntryDto
     {
         public byte[] UserPassSalt { get; }
-        public byte[] EncryptedMainKeyIvpair { get; }
+        public byte[] EncryptedMainKeyIvPair { get; }
 
-        public UserEntryDto(byte[] userPassSalt, byte[] encryptedMainKeyIvpair)
+        public UserEntryDto(byte[] userPassSalt, byte[] encryptedMainKeyIvPair)
         {
             UserPassSalt = userPassSalt;
-            EncryptedMainKeyIvpair = encryptedMainKeyIvpair;
+            EncryptedMainKeyIvPair = encryptedMainKeyIvPair;
         }
     }
 

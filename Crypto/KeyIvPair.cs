@@ -28,6 +28,8 @@ namespace Crypto
 
         public KeyIvPair(string password, byte[] salt = null)
         {
+            System.Diagnostics.Debug.Assert(salt == null || salt.Length == 8);
+            
             var deriveBytes = salt != null
                 ? new Rfc2898DeriveBytes(password, salt, 1000, HashAlgorithmName.SHA256)
                 : new Rfc2898DeriveBytes(password, 8, 1000, HashAlgorithmName.SHA256);

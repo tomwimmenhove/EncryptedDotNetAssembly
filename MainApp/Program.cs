@@ -28,8 +28,8 @@ namespace MainApp
         {
             await client.SetPasswordAsync(
                 new SetPasswordDto { Old = DefaultPassword, New = Password });
-            await client.AddPasswordAsync(
-                new AddPasswordDto { MainPass = Password, UserName = ExampleUser, UserPass = ExamplePass });
+            await client.AddUserAsync(
+                new AddUserDto { MainPass = Password, UserName = ExampleUser, UserPass = ExamplePass });
 
             using var inFile = File.Open(AssemblyFileName, FileMode.Open);
             using var outFile = File.Open(AssemblyResourceFileName, FileMode.Create);
@@ -46,7 +46,7 @@ namespace MainApp
             var userEntry = await client.GetUserAsync(username);
 
             var keyIvPair = new KeyIvPair(password, userEntry.UserPassSalt);
-            var decryptedMainKeyIvPair = Crypto.Encryption.Decrypt(userEntry.EncryptedMainKeyIvpair, keyIvPair);
+            var decryptedMainKeyIvPair = Crypto.Encryption.Decrypt(userEntry.EncryptedMainKeyIvPair, keyIvPair);
 
             return new KeyIvPair(decryptedMainKeyIvPair);
         }

@@ -1,0 +1,6 @@
+bin/
+obj/
+.gitignore
+PasswordService/main.json
+PasswordService/users.json
+**/*.log
