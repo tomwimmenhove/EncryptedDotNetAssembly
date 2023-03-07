@@ -1,34 +1,26 @@
-using System;
-
 namespace PasswordService
 {
     public class UserEntryDto
     {
-        public byte[] UserPassSalt { get; }
-        public byte[] EncryptedMainKeyIvPair { get; }
-
-        public UserEntryDto(byte[] userPassSalt, byte[] encryptedMainKeyIvPair)
-        {
-            UserPassSalt = userPassSalt;
-            EncryptedMainKeyIvPair = encryptedMainKeyIvPair;
-        }
+        public byte[] UserPassSalt { get; set;} = default!;
+        public byte[] EncryptedMainKeyIvPair { get; set; } = default!;
     }
 
     public class SetPasswordDto
     {
-        public string Old { get; set; } = "";
-        public string New { get; set; } = "";
+        public string Old { get; set; } = default!;
+        public string New { get; set; } = default!;
     }
 
     public class AddUserDto
     {
-        public string MainPass { get; set; } = "";
-        public string UserName { get; set; } = "";
-        public string UserPass { get; set; } = "";
+        public string MainPass { get; set; } = default!;
+        public string UserName { get; set; } = default!;
+        public string UserPass { get; set; } = default!;
     }
 
     public class PasswordDto
     {
-        public string Pass { get; set; } = "";
+        public string Pass { get; set; } = default!;
     }
 }

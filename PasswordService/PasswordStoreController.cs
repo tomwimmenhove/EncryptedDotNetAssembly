@@ -48,7 +48,11 @@ namespace PasswordService
             var mainKeyIvPair = new KeyIvPair(dto.MainPass, mainPassStore.Salt);
             var keyIvPair = new KeyIvPair(dto.UserPass);
             var encryptedMainKeyIvpair = Crypto.Encryption.Encrypt(mainKeyIvPair.GetAsBytes(), keyIvPair);
-            var userEntry = new UserEntryDto(keyIvPair.Salt, encryptedMainKeyIvpair);
+            var userEntry = new UserEntryDto
+            {
+                UserPassSalt = keyIvPair.Salt,
+                EncryptedMainKeyIvPair = encryptedMainKeyIvpair
+            };
 
             await _storage.SetUser(dto.UserName, userEntry);
 

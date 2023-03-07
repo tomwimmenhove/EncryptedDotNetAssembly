@@ -86,9 +86,10 @@ public class DynamoPasswordStorage : IPasswordStorage
             return null;
         }
 
-        return new UserEntryDto(
-            Convert.FromBase64String(item.Item["userPassSalt"].S),
-            Convert.FromBase64String(item.Item["encryptedMainKeyIvPair"].S)
-        );
+        return new UserEntryDto
+        {
+            UserPassSalt = Convert.FromBase64String(item.Item["userPassSalt"].S),
+            EncryptedMainKeyIvPair = Convert.FromBase64String(item.Item["encryptedMainKeyIvPair"].S)
+        };
     }
 }
