@@ -2,14 +2,21 @@ using PasswordService.BackingStore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+
+#if false
 builder.Services.AddSingleton<IPasswordStorage, FilePasswordStorage>();
+#else
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+builder.Services.AddSingleton<IPasswordStorage, DynamoPasswordStorage>();
+#endif
+
 builder.Services.AddSwaggerGen(c => 
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Example API", Version = "v1" }));
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "PasswordService API", Version = "v1" }));
 
 var app = builder.Build();
 app.MapControllerRoute(name: "default", pattern: "{controller=PasswordStore}/{action=Index}/{id?}");
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();

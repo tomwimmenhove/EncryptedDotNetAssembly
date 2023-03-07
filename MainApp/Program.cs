@@ -10,6 +10,8 @@ namespace MainApp
 {
     class Program
     {
+        //private const string PasswordStoreClientUrl = "http://localhost:5102"; 
+        private const string PasswordStoreClientUrl = "https://ycejk6mcstm2n5ob3ilzzjz5ky0obbki.lambda-url.eu-central-1.on.aws/"; 
         private const string DefaultPassword = "admin";
         private const string Password = "SomeVerySecretPassword";
 
@@ -53,7 +55,7 @@ namespace MainApp
 
         static async Task Main(string[] args)
         {
-            var client = new PasswordStoreClient("http://localhost:5102/", new HttpClient());
+            var client = new PasswordStoreClient(PasswordStoreClientUrl, new HttpClient());
 
             if (args.Length > 0)
             {
