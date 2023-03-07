@@ -8,7 +8,7 @@
             "name": "FrontEnd",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildMainApp",
             "program": "${workspaceFolder}/MainApp/bin/Debug/net6.0/MainApp.dll",
             "args": [ ],
             "cwd": "${workspaceFolder}/MainApp",
@@ -22,7 +22,7 @@
             "name": "BackEnd",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildPasswordService",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/PasswordService/bin/Debug/net6.0/PasswordService.dll",
             "args": [ ],

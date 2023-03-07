@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "buildMainApp",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -14,19 +14,19 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publishMainApp",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/MainApp/MainApp.csproj",
+                "${workspaceFolder}/Mainhttps://wukcmnqzu4ui27xswjvkgfzoqu0ceyuf.lambda-url.eu-central-1.on.aws/App/MainApp.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watchMainApp",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -41,7 +41,7 @@
 
 
         {
-            "label": "build",
+            "label": "buildPasswordService",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -53,7 +53,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publishPasswordService",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -65,7 +65,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watchPasswordService",
             "command": "dotnet",
             "type": "process",
             "args": [
