@@ -12,34 +12,36 @@ namespace MainApp
     {
         //private const string PasswordStoreClientUrl = "http://localhost:5102"; 
         private const string PasswordStoreClientUrl = "https://ycejk6mcstm2n5ob3ilzzjz5ky0obbki.lambda-url.eu-central-1.on.aws/"; 
-        private const string DefaultPassword = "admin";
-        private const string Password = "SomeVerySecretPassword";
-
-        private const string ExampleUser = "SomeUser";
-        private const string ExamplePass = "SomePassword";
 
         private const string AssemblyResourceName = "MainApp.Resources.EncryptedAssembly.data";
-        private const string SaltResourceName = "MainApp.Resources.EncryptedAssemblySalt.data";
         private const string SecretStuffClassName = "SecretAssembly.SecretStuff";
 
         private const string AssemblyFileName = @"../SecretAssembly/bin/release/net5.0/SecretAssembly.dll";
         private const string AssemblyResourceFileName = "Resources/EncryptedAssembly.data";
-        private const string SaltResourceFileName = "Resources/EncryptedAssemblySalt.data";
 
         static async Task Configure(PasswordStoreClient client)
         {
+            Console.Write("Current main password: ");
+            var mainPas = Console.ReadLine();
+            Console.Write("New main password: ");
+            var newMainPass = Console.ReadLine();
+
+            Console.WriteLine("");
+            Console.Write("Create user: ");
+            var username = Console.ReadLine();
+            Console.Write("User's password: ");
+            var userPass = Console.ReadLine();
+
             await client.SetPasswordAsync(
-                new SetPasswordDto { Old = DefaultPassword, New = Password });
+                new SetPasswordDto { Old = mainPas, New = newMainPass });
             await client.AddUserAsync(
-                new AddUserDto { MainPass = Password, UserName = ExampleUser, UserPass = ExamplePass });
+                new AddUserDto { MainPass = newMainPass, UserName = username, UserPass = userPass });
 
             using var inFile = File.Open(AssemblyFileName, FileMode.Open);
             using var outFile = File.Open(AssemblyResourceFileName, FileMode.Create);
-            using var saltFile = File.Open(SaltResourceFileName, FileMode.Create);
 
-            var keyIvPair = await GetMainIvPair(client, ExampleUser, ExamplePass);
+            var keyIvPair = await GetMainIvPair(client, username, userPass);
 
-            saltFile.Write(keyIvPair.Salt);
             Encryption.Encrypt(inFile, outFile, keyIvPair);
         }
 
@@ -69,8 +71,13 @@ namespace MainApp
                 return;
             }
 
+            Console.Write("User: ");
+            var username = Console.ReadLine();
+            Console.Write("Password: ");
+            var userPass = Console.ReadLine();
+
             var executingAssembly = Assembly.GetExecutingAssembly();
-            var mainKeyIvPair = await GetMainIvPair(client, ExampleUser, ExamplePass);
+            var mainKeyIvPair = await GetMainIvPair(client, username, userPass);
 
             var loader = new Loader(mainKeyIvPair);
             var assembly = loader.LoadAssemblyFromResource(AssemblyResourceName);
