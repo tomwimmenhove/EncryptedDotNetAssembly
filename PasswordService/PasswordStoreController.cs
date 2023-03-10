@@ -67,7 +67,7 @@ namespace PasswordService
             var userEntry = await _storage.GetUser(user);
             if (userEntry == null)
             {
-                return NotFound($"User \"{userEntry}\" not found");
+                return NotFound($"User \"{user}\" not found");
             }
 
             return Ok(userEntry);
