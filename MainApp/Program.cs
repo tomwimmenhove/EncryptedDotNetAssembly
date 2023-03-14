@@ -11,7 +11,7 @@ namespace MainApp
     class Program
     {
         //private const string PasswordStoreClientUrl = "http://localhost:5102"; 
-        private const string PasswordStoreClientUrl = "https://ycejk6mcstm2n5ob3ilzzjz5ky0obbki.lambda-url.eu-central-1.on.aws/"; 
+        private const string PasswordStoreClientUrl = "https://rest.api.tomwimmenhove.com/password/"; 
 
         private const string AssemblyResourceName = "MainApp.Resources.EncryptedAssembly.data";
         private const string SecretStuffClassName = "SecretAssembly.SecretStuff";
@@ -57,7 +57,8 @@ namespace MainApp
 
         static async Task Main(string[] args)
         {
-            var client = new PasswordStoreClient(PasswordStoreClientUrl, new HttpClient());
+            var httpClient = new HttpClient { BaseAddress = new Uri(PasswordStoreClientUrl) };
+            var client = new PasswordStoreClient(httpClient);
 
             if (args.Length > 0)
             {

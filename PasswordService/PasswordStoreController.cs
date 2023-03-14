@@ -6,7 +6,8 @@ using Crypto;
 namespace PasswordService
 {
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
+    [Route("/")]
     public class AuthController : ControllerBase
     {
         private readonly IPasswordStorage _storage;
@@ -71,6 +72,14 @@ namespace PasswordService
             }
 
             return Ok(userEntry);
+        }
+
+        [HttpGet("GetRegion")]
+        public IActionResult GetRegion() 
+        {
+            var region = Environment.GetEnvironmentVariable("AWS_REGION");
+
+            return Ok(region);
         }
     }
 }
